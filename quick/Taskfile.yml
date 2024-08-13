@@ -1,0 +1,33 @@
+# https://taskfile.dev
+
+version: '3'
+
+# dotenv: ['.env']
+
+tasks:
+  default:
+    cmds:
+      - task --list-all
+    silent: true
+
+  update:
+    desc: upgrade all the go modules
+    cmds:
+      - go get -u ./...
+      
+  entg:
+    desc: regenerate ent code after we make any edits to `schema/*.go`
+    cmds:
+      - go run ./cmd/entg .
+
+  migrate:
+    desc: run db migration script for against ent scheam
+    # deps: [entg]
+    cmds:
+      - go run ./cmd/dbmigrate .
+
+  entnew:
+    desc: create new ent schema `task entnew -- User`
+    cmds:
+      - go run -mod=mod entgo.io/ent/cmd/ent new --target "schema" {{.CLI_ARGS}}
+  

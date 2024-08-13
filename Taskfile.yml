@@ -1,0 +1,9 @@
+# https://taskfile.dev
+
+version: '3'
+
+includes:
+  quick:
+    taskfile: ./quick/Taskfile.yml
+    dir: ./quick
+ 
